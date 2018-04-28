@@ -1,0 +1,254 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+@import url("https://fonts.googleapis.com/css?family=Lato:100,300,400");
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+:root {
+  --fretboardHeight: 300;
+  --numberOfStrings: 6;
+  --stringHeight: 10;
+  --halfStringHeight: calc(var(--stringHeight) / 2);
+  --stringTopPosition: calc(((var(--fretboardHeight) / var(--numberOfStrings) / 2) - var(--halfStringHeight)) * 1px);
+  --fretboardMinWidth: 1000;
+  --showDot: 0; }
+
+body {
+  background: #333536;
+  font-family: Lato, sans-serif;
+  color: #eee; }
+
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 20px;
+  min-width: 1000px;
+  background: #000;
+  font-size: 0.9em;
+  border-bottom: 2px solid #4c4f50; }
+  .settings .sharps-flats {
+    padding-right: 20px; }
+  .settings .select-instrument {
+    padding: 0 20px; }
+  .settings input::-webkit-outer-spin-button,
+  .settings input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */ }
+  .settings .frets {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    margin-right: 20px; }
+    .settings .frets input[type="number"] {
+      width: 30px;
+      height: 24px;
+      text-align: center; }
+    .settings .frets .number-stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      font-size: 20px;
+      padding: 15px;
+      background: lightgray;
+      height: 24px;
+      width: 15px;
+      color: black;
+      cursor: pointer; }
+  .settings .tuning {
+    padding-left: 20px; }
+    .settings .tuning select {
+      margin: 0 5px;
+      width: 40px; }
+  .settings .signs-radio-btn {
+    display: inline-block; }
+    .settings .signs-radio-btn input[type="radio"] {
+      position: absolute;
+      opacity: 0; }
+      .settings .signs-radio-btn input[type="radio"] + .signs-label:before {
+        content: '';
+        background: #aeaeae;
+        border-radius: 100%;
+        display: inline-block;
+        border: 1px solid #6e6e6e;
+        width: 1.2em;
+        height: 1.2em;
+        position: relative;
+        top: -.1em;
+        margin-right: .2em;
+        margin-left: .5em;
+        vertical-align: top;
+        cursor: pointer;
+        text-align: center;
+        transition: all 250ms ease; }
+      .settings .signs-radio-btn input[type="radio"]:checked + .signs-label:before {
+        background-color: #343436;
+        box-shadow: inset 0 0 0 4px #aeaeae; }
+      .settings .signs-radio-btn input[type="radio"]:focus + .signs-label:before {
+        outline: none;
+        border-color: #343436; }
+      .settings .signs-radio-btn input[type="radio"] + .signs-label:empty:before {
+        margin-right: 0; }
+
+.fretboard {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  position: relative;
+  width: 100%;
+  min-width: calc(var(--fretboardMinWidth) * 1px);
+  height: calc(var(--fretboardHeight) * 1px);
+  background: #be975b url(../images/wood-pattern.png); }
+
+.string {
+  width: 100%;
+  height: 100%;
+  display: flex; }
+  .string:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: calc(var(--stringHeight) * 1px);
+    background: linear-gradient(#eee, #999);
+    box-shadow: 76px 3px 10px #806233;
+    z-index: 1; }
+
+.string0:before {
+  top: var(--stringTopPosition); }
+
+.string1:before {
+  top: calc(var(--stringTopPosition) + (var(--fretboardHeight) / var(--numberOfStrings)) * 1px); }
+
+.string2:before {
+  top: calc(var(--stringTopPosition) + (var(--fretboardHeight) / var(--numberOfStrings)) * 2 * 1px); }
+
+.string3:before {
+  top: calc(var(--stringTopPosition) + (var(--fretboardHeight) / var(--numberOfStrings)) * 3 * 1px); }
+
+.string4:before {
+  top: calc(var(--stringTopPosition) + (var(--fretboardHeight) / var(--numberOfStrings)) * 4 * 1px); }
+
+.string5:before {
+  top: calc(var(--stringTopPosition) + (var(--fretboardHeight) / var(--numberOfStrings)) * 5 * 1px); }
+
+.note {
+  display: flex;
+  flex: 1;
+  border-left: 0;
+  border-right: 10px solid;
+  border-image: linear-gradient(to left, #777, #bbb, #777) 1 100%;
+  box-shadow: 2px 0 2px -2px #92703a;
+  justify-content: center;
+  align-items: center;
+  min-width: 1.4em; }
+  .note:first-child {
+    background: #161717;
+    border-right: 12px solid;
+    flex-grow: 0;
+    flex-shrink: 0;
+    min-width: 60px;
+    border-image: linear-gradient(to left, #bbb, #fff, #bbb) 1 100%; }
+  .note:before {
+    content: attr(data-note);
+    position: absolute;
+    line-height: 33px;
+    text-align: center;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    border: 2px solid #006963;
+    background: #008880;
+    color: #003c38;
+    font-size: 1em;
+    user-select: none;
+    z-index: 2;
+    opacity: var(--showDot); }
+
+.fret-mark-1:after {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  top: 50%;
+  background: #806233;
+  transform: translate(0, -50%); }
+
+.fret-mark-2:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  top: 25%;
+  background: #806233;
+  transform: translate(-50%, -50%); }
+
+.fret-mark-2:after {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  top: 75%;
+  background: #806233;
+  transform: translate(-50%, -50%); }
+
+#note-name-section {
+  display: flex;
+  margin-top: 40px;
+  justify-content: center;
+  text-align: center; }
+  #note-name-section li {
+    font-size: 2em;
+    font-weight: 200;
+    display: inline-block;
+    margin-left: 20px;
+    cursor: pointer; }
+    #note-name-section li:hover {
+      color: #55fff5; }

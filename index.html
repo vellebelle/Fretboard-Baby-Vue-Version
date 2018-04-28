@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+  <div id="app">
+    <div class="settings">
+      <div class="sharps-flats">
+        <div class="signs-radio-btn">
+            <input id="flats" type="radio" v-on:click="showFlats = true" value="flats" name="sharpflat" checked>
+            <label class="signs-label" for="flats">♭</label>
+            
+            <input id="sharps" type="radio" v-on:click="showFlats = false" value="sharps" name="sharpflat">
+            <label class="signs-label" for="sharps">♯</label>
+        </div> 
+      </div>
+      
+      <div class="select-instrument">
+        <span>Instrument: </span>
+        <select name="instrument-presets" id="instrument-presets" v-on:change="setInstrument" v-model="selectedInstrument">
+          <option v-for="(instrument, key) in instrumentTuningPresets" v-bind:value="key">{{ key}}</option>
+        </select>
+      </div>
+      
+      
+      <div class="frets">
+        <span class="number-stepper" v-on:click="numberOfFrets--">-</span>
+        <input id="number-of-frets" type="number" v-model.number="numberOfFrets">
+        <span class="number-stepper" v-on:click="numberOfFrets++">+</span>
+      </div>
+      <!-- <label for="number-of-frets">Frets: </label>
+      <input id="number-of-frets" type="number" v-model.number="numberOfFrets"> -->
+    
+      <label for="show-all-notes">Show all</label>
+      <input type="checkbox" id="show-all-notes" v-model="showAllNotes">
+
+      <label for="show-multiple-notes">Show multiple</label>
+      <input type="checkbox" id="show-multiple-notes" v-model="showMultipleNotes">
+
+      <div class="tuning">
+        <span>Tuning: </span>
+        <select v-for="(string, stringNumber) in numberOfStrings" name="" id="" v-model="relativeTransposeValues[parseInt(stringNumber)]" v-on:change="updateTuning($event, stringNumber)">
+           <option v-for="i in 12" v-bind:value="i-1">{{ generateNoteString(instrumentTuningPresets[selectedInstrument][stringNumber] + (i - 1), showFlats) }}</option> 
+         <!--  <option v-for="i in 12" v-bind:value="i-1">{{ generateNoteString(instrumentTuningPresets[selectedInstrument].slice().reverse()[stringNumber] + (i - 1), showFlats) }}</option> -->
+        </select>
+        <button v-on:click="resetTuning">Reset Tuning</button>
+      </div>
+
+    </div>
+
+
+
+    <div class="fretboard">
+      <div v-for="(string, stringNumber) in numberOfStrings" class="string" v-bind:class="'string' + stringNumber">
+        <div v-for="fret in (numberOfFrets + 1)" class="note" 
+            v-bind:class="{ 'fret-mark-1': stringNumber === 0 && fretMark1.indexOf(fret) >= 0 ? true : false}"
+            v-bind:data-note="generateNoteString(currentTuning[stringNumber] + (fret - 1), showFlats)"
+            v-on:mouseover="showDot"
+            v-on:mouseleave="hideDot"
+            ref="noteDiv"
+            >
+          <div v-if="stringNumber === 0 && fretMark2.indexOf(fret) >= 0" class="fret-mark-2">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="note-name-section">
+      <ul>
+        <li v-for="i in 12" 
+          class="text-note-name"
+          v-on:mouseover="showDot"
+          v-on:mouseout="hideDot">{{ generateNoteString((i -1) ,showFlats) }}</li>
+      </ul>
+
+    </div>
+  </div>
+
+  <script src='js/vue.js'></script>
+  <script src="js/main-min.js"></script>
+
+</body>
+
+</html>

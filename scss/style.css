@@ -1,0 +1,22 @@
+:root {
+  --fretboardHeight: 300;
+  --numberOfStrings: 6;
+  --stringHeight: 10;
+  --halfStringHeight: calc(var(--stringHeight) / 2);
+  --stringTopPosition: calc(((var(--fretboardHeight) / var(--numberOfStrings) / 2) - var(--halfStringHeight)) * 1px);
+  --fretboardMinWidth: 1000; }
+
+body {
+  background: #333536;
+  font-family: Lato, sans-serif;
+  color: #eee; }
+
+.fretboard {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  position: relative;
+  width: 100%;
+  min-width: calc(var(--fretboardMinWidth) * 1px);
+  height: calc(var(--fretboardHeight) * 1px);
+  background: #be975b url(../wood-pattern.png); }
